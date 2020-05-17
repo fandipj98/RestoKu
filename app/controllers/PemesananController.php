@@ -1,13 +1,13 @@
 <?php
 
-class PemesananController extends BaseController
+class PemesananController extends ControllerBase
 {
 
     public function createAction()              // Pemesanan awal
     {
         if(!$this->session->has('user'))
         {
-            $this->response->redirect('/signin');
+            $this->response->redirect('/login');
         }
         // return ke view
     }
@@ -16,7 +16,7 @@ class PemesananController extends BaseController
     {
         if(!$this->session->has('user'))
         {
-            $this->response->redirect('/signin');
+            $this->response->redirect('/login');
         }
 
         // Ambil semua data yang ada di response

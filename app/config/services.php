@@ -2,7 +2,9 @@
 declare(strict_types=1);
 
 use Phalcon\Escaper;
+use Phalcon\Events\Event;
 use Phalcon\Flash\Direct as Flash;
+use Phalcon\Flash\Session as FlashSession;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
@@ -14,8 +16,14 @@ use Phalcon\Url as UrlResolver;
 /**
  * Shared configuration service
  */
-$di->setShared('config', function () {
-    return include APP_PATH . "/config/config.php";
+$di->setShared('config', function () use ($config) {
+    return $config;
+});
+
+$di->setShared('request_uri', function (){
+    $config = $this->getConfig();
+    return $config->application->baseUri == '/' ?
+        $_SERVER['REQUEST_URI'] : str_replace($config->application->baseUri, '', $_SERVER['REQUEST_URI']);
 });
 
 /**
@@ -72,10 +80,11 @@ $di->setShared('db', function () {
         'username' => $config->database->username,
         'password' => $config->database->password,
         'dbname'   => $config->database->dbname,
+        'port'   => $config->database->port,
         'charset'  => $config->database->charset
     ];
 
-    if ($config->database->adapter == 'Postgresql') {
+    if ($config->database->adapter == 'Postgresql' || $config->database->adapter == 'Sqlite') {
         unset($params['charset']);
     }
 
@@ -107,6 +116,13 @@ $di->set('flash', function () {
     return $flash;
 });
 
+$di->set(
+    'flashSession',
+    function () {
+        return new FlashSession();
+    }
+);
+
 /**
  * Start the session the first time some component request the session service
  */
@@ -116,7 +132,39 @@ $di->setShared('session', function () {
         'savePath' => sys_get_temp_dir(),
     ]);
     $session->setAdapter($files);
-    $session->start();
+    if (session_status() == PHP_SESSION_NONE) {
+        $session->start();
+    }
 
     return $session;
+});
+
+$di->setShared('dispatcher', function() {
+
+    $eventsManager = new \Phalcon\Events\Manager();
+
+    $eventsManager->attach(
+        'dispatch:beforeException',
+        function (Event $event, \Phalcon\Mvc\Dispatcher $dispatcher, Exception $exception) {
+            // 404
+            if ($exception instanceof \Phalcon\Dispatcher\Exception) {
+                $dispatcher->forward(
+                    [
+                        'controller' => 'error',
+                        'action'     => 'notFound',
+                    ]
+                );
+
+                return false;
+            }
+        }
+    );
+
+    $dispatcher = new \Phalcon\Mvc\Dispatcher();
+
+    //Bind the EventsManager to the dispatcher
+    $dispatcher->setEventsManager($eventsManager);
+
+    return $dispatcher;
+
 });

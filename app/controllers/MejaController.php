@@ -1,6 +1,6 @@
 <?php
 
-class MejaController extends BaseController
+class MejaController extends ControllerBase
 {
 
     public function createAction()              // Meja awal

@@ -7,7 +7,7 @@ $loader = new \Phalcon\Loader();
  */
 
 $loader->registerNamespaces([
-    'Phalcon\Db' => APP_PATH . '/library/Phalcon/Db',
+    'Phalcon\Db' => APP_PATH . '/lib/Phalcon/Db',
 ]);
 
 $loader->registerDirs(
