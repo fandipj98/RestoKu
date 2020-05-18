@@ -114,7 +114,7 @@ class MenuController extends ControllerBase
 
     public function deleteAction($id)
     {
-        if($this->session('auth')['status']==0)                      // Checking apakah admin
+        if($this->session->has('auth')['status']==0)                      // Checking apakah admin
         {
             $menu = Menu::findFirst($id);
             $menu->delete();
