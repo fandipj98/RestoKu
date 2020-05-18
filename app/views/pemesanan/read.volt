@@ -55,7 +55,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <img src={{ pemesanan.bukti_pembayaran}} width="400px">
+                                                        <img src={{ url(pemesanan.bukti_pembayaran)}} width="400px">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
