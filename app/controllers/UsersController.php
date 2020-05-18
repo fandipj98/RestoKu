@@ -29,7 +29,7 @@ class UsersController extends ControllerBase
         $no_telp = $this->request->getPost('no_telp', 'string');
         $pass = $this->request->getPost('pass', 'string');
         $cpass = $this->request->getPost('cpass', 'string');
-        $status = 0;
+        $status = 1;
 
         //set value
         if($pass === $cpass && $pass != ''){

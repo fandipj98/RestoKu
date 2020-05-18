@@ -51,12 +51,14 @@ CREATE TABLE Pemesanan(
     id int NOT NULL IDENTITY(1,1),
     id_user int NOT NULL,
     id_meja int NOT NULL,
-    tanggal_pemesanan TIMESTAMP NOT NULL,
+    tanggal_pemesanan DATETIME NOT NULL,
     waktu_reservasi DATETIME NOT NULL,
-    durasi INT NOT NULL,
+    waktu_selesai DATETIME NOT NULL,
+	biaya INT NOT NULL,
     lunas TINYINT NOT NULL,
     bukti_pembayaran VARCHAR(50) NOT NULL,
 
+	CONSTRAINT PK_Pemesanan PRIMARY KEY (id),
     CONSTRAINT FK_Pemesanan_Users FOREIGN KEY (id_user) REFERENCES Users(id_user),
     CONSTRAINT FK_Pemesanan_Meja FOREIGN KEY (id_meja) REFERENCES Meja(id),
 );
@@ -94,3 +96,5 @@ INSERT INTO Users (email, firstName, lastName, no_telp, pass, status)
 VALUES ('tes@gmail.com', 'Tes', 'Ting', '08123456789', '123', '0')
 
 UPDATE Users SET status=0 WHERE email='admin@admin.admin'
+
+SELECT * FROM Pemesanan

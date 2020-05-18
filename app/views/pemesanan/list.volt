@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form id="login-form" class="form" action="/pemesanan/list" method="post">
+    <form id="login-form" class="form bg-dark" action="/pemesanan/list" method="post">
         <h3 class="text-center text-white">Reservasi</h3>
         <div class="form-group">
             <label for="date" class="text-white col-md-2">Tanggal Reservasi:</label>

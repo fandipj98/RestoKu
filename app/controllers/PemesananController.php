@@ -5,7 +5,7 @@ class PemesananController extends ControllerBase
 
     public function createAction()              // Pemesanan awal
     {
-        if(!$this->session->get('auth'))
+        if(!$this->session->has('auth'))
         {
             $this->response->redirect('/login');
         }
@@ -14,7 +14,7 @@ class PemesananController extends ControllerBase
 
     public function saveAction()                // Pemesanan awal
     {
-        if(!$this->session->get('auth'))
+        if(!$this->session->has('auth'))
         {
             $this->response->redirect('/login');
         }
@@ -42,7 +42,7 @@ class PemesananController extends ControllerBase
         $pemesanan = new Pemesanan();
 
         $pemesanan->id_meja                 = $meja;
-        $pemesanan->id_user                 = $this->session->get('user')->id;
+        $pemesanan->id_user                 = $this->session->get('auth')['id_user'];
         $pemesanan->tanggal_pemesanan       = date('Y-m-d H:i', strtotime($mytgl));
         $pemesanan->waktu_reservasi         = date('Y-m-d H:i', strtotime($datetime));
         $pemesanan->waktu_selesai           = date('Y-m-d H:i', strtotime($final_date));
@@ -56,13 +56,13 @@ class PemesananController extends ControllerBase
 
     public function readAction()                // Melihat pesanan yang dipesan oleh user
     {
-        if($this->session->get('user')->name == "admin")
+        if($this->session->get('auth')['status'] == 0)
         {
             $pemesanans = Pemesanan::find('lunas = 1');
         }
         else
         {
-            $pemesanans = Pemesanan::find("id_user = '". $this->session->get('user')->id ."'");
+            $pemesanans = Pemesanan::find("id_user = '". $this->session->get('auth')['id_user'] ."'");
         }
 
         // return ke view $pemesanannya
@@ -129,7 +129,7 @@ class PemesananController extends ControllerBase
 
     public function verifikasiAction($id)
     {
-        if($this->session->get('user')->name == 'admin')
+        if($this->session->get('auth')['status'] == 0)
         {
             $pemesanan = Pemesanan::findFirst($id);
             $pemesanan->lunas = 2;
@@ -144,9 +144,9 @@ class PemesananController extends ControllerBase
 
     public function listAction()
     {
-        if(!$this->session->get('auth'))
+        if(!$this->session->has('auth'))
         {
-            $this->response->redirect('/signin');
+            $this->response->redirect('/login');
         }
 
         $date           = $this->request->getPost('date');
