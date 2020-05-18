@@ -1,10 +1,17 @@
 <?php
+declare(strict_types=1);
 
-class IndexController extends BaseController
+class IndexController extends ControllerBase
 {
+
     public function indexAction()
     {
-        if($this->session->has('user')) $this->view->user = $this->session->get('user');
-        else $this->view->user = "";
+        
     }
+
+    public function aboutAction()
+    {
+        
+    }
+
 }
