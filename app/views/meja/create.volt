@@ -1,6 +1,6 @@
-{% extends "layouts/index.volt" %}
+{% extends "layouts/base.volt" %}
 
-{% block body %}
+{% block content %}
 
 <div class="container text-white">
     <h2>Tambah meja untuk reservasi</h2>

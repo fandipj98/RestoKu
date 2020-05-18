@@ -1,6 +1,6 @@
-{% extends "layouts/index.volt" %}
+{% extends "layouts/base.volt" %}
 
-{% block body %}
+{% block content %}
 
     <form id="login-form" class="form" action="/pemesanan/list" method="post">
         <h3 class="text-center text-white">Reservasi</h3>

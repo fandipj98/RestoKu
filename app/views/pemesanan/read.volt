@@ -1,9 +1,9 @@
-{% extends "layouts/index.volt" %}
+{% extends "layouts/base.volt" %}
 
-{% block body %}
+{% block content %}
 
     <section class="py-2 px-5">
-        {% if session.get('user').name != "admin" %}
+        {% if session.get('auth')['status'] != 0 %}
             <a class="text-dark" href="/pemesanan/create">
                 <div class="btn btn-primary">
                     Tambah reservasi
@@ -40,7 +40,7 @@
                                                     <label class="col-md-6 text-left">Waktu Selesai </label> : {{pemesanan.waktu_selesai}}
                                                 </div>
                                             </form>
-                                            {% if session.get('user').name == "admin" %}
+                                            {% if session.get('auth')['status'] == "admin" %}
                                                 <div class="btn btn-primary"  data-toggle="modal" data-target="#imgModal{{ pemesanan.id }}">
                                                     Bukti Pembayaran
                                                 </div>
@@ -66,7 +66,7 @@
                                             {% endif %}
                                         </div>
                                         <div class="ml-5 col-md-3">
-                                        {% if session.get('user').name == "admin" %}
+                                        {% if session.get('auth')['status'] == "admin" %}
                                             {% if pemesanan.lunas == 1 OR pemesanan.lunas == 0%}
                                                 <a href={{ url("pemesanan/verifikasi/" ~  pemesanan.id) }}>
                                                     <div class="btn btn-primary">

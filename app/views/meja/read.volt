@@ -1,6 +1,6 @@
-{% extends "layouts/index.volt" %}
+{% extends "layouts/base.volt" %}
 
-{% block body %}
+{% block content %}
 
     <section class="py-2 px-5">
         <div class="btn btn-primary">

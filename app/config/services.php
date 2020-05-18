@@ -75,6 +75,7 @@ $di->setShared('db', function () {
     $config = $this->getConfig();
 
     $class = 'Phalcon\Db\Adapter\Pdo\\' . $config->database->adapter;
+    // $class = 'Phalcon\Db\Adapter\Pdo\Sqlsrv';
     $params = [
         'host'     => $config->database->host,
         'username' => $config->database->username,

@@ -1,6 +1,6 @@
-{% extends "layouts/index.volt" %}
+{% extends "layouts/base.volt" %}
 
-{% block body %}
+{% block content %}
 
 <form accept-charset="UTF-8" class="text-white" action="/pemesanan/change" method="post" enctype="multipart/form-data">
     <div class="form-group">
