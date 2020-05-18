@@ -190,4 +190,32 @@ class PesananController extends ControllerBase
         }
     }
 
+    public function terkirimAction()
+    {
+        if($this->request->isPost()){
+            $id_pesanan = $this->request->getPost('id_pesanan', 'int');
+            $conditions = ['id' => $id_pesanan];
+            $pesanan = Pesanan::findFirst([
+                'conditions' => 'id_pesanan = :id:',
+                'bind' => $conditions,
+            ]);
+            $status_pengiriman = 1;
+            
+            $pesanan->status_pengiriman = $status_pengiriman;
+            $success = $pesanan->save();
+
+            if($success){
+                $this->response->redirect('pesanan');
+            }
+            else{
+                $this->flashSession->error("Error: Pengiriman Pesanan gagal divalidasi");
+                $this->response->redirect('pesanan');
+            }
+        }
+        else{
+            $this->flashSession->error("Error: Bukan method post pengiriman pesanan.");
+            $this->response->redirect('error');
+        }
+    }
+
 }

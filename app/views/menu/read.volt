@@ -39,7 +39,7 @@
                                     </div>
                                 </a>    
                                 <a class="py-2" href={{ url("menu/update/" ~  menu.id_menu) }}>
-                                    <div class="btn btn-lg btn-danger py-2">
+                                    <div class="btn btn-lg btn-primary py-2">
                                         Update
                                     </div>
                                 </a>                                 

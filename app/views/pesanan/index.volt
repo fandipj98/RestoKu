@@ -94,11 +94,21 @@
 							{% if pesanan.sudah_dibayar == 0 %}
 								<form method="POST" action="{{ url("pesanan/validasi") }}">
 									<input name="id_pesanan" value="{{ pesanan.id_pesanan }}" hidden>
-									<button type="submit" class="primary-btn">Validasi</button>
+									<button type="submit" class="btn btn-success">Validasi</button>
 								</form>
 							{% else %}
 								<div class="btn btn-success disabled">
 									Terverifikasi
+								</div>
+							{% endif %}
+							{% if pesanan.status_pengiriman == 0 %}
+								<form method="POST" action="{{ url("pesanan/terkirim") }}">
+									<input name="id_pesanan" value="{{ pesanan.id_pesanan }}" hidden>
+									<button type="submit" class="btn btn-success">Terkirim</button>
+								</form>
+							{% else %}
+								<div class="btn btn-success disabled">
+									Selesai
 								</div>
 							{% endif %}
 						</div>
