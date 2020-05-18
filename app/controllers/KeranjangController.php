@@ -8,9 +8,13 @@ class KeranjangController extends ControllerBase
 {
 
     public function beforeExecuteRoute(){
-        if($this->session->has('auth') == 0){
+        if(!$this->session->has('auth')){
             $this->flashSession->error('You must login first!');
             $this->response->redirect('login');
+            return false;
+        }
+        if($this->session->get('auth')['status'] == 0){
+            $this->response->redirect('/');
             return false;
         }
     }

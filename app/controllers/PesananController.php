@@ -9,30 +9,39 @@ class PesananController extends ControllerBase
 {
 
     public function beforeExecuteRoute(){
-        if($this->session->has('auth') == 0){
+        if(!$this->session->has('auth')){
             $this->flashSession->error('You must login first!');
             $this->response->redirect('login');
             return false;
         }
     }
 
+    
+
     public function indexAction()
     {
         // read pesanan
-        $id_user = $this->session->get('auth')['id_user'];
-
-        $conditions = ['id' => $id_user];
-        $pesanans = Pesanan::find([
-            'conditions' => 'id_user = :id:',
-            'bind' => $conditions,
-        ]);
-
-        if($pesanans->count() > 0){
+        if($this->session->get('auth')['status'] == 0){
+            $pesanans = Pesanan::find();
             $this->view->pesanans = $pesanans;
             $this->view->flag = 1;
-        }
-        else{
-            $this->view->flag = 0;
+        }   
+        else{ 
+            $id_user = $this->session->get('auth')['id_user'];
+
+            $conditions = ['id' => $id_user];
+            $pesanans = Pesanan::find([
+                'conditions' => 'id_user = :id:',
+                'bind' => $conditions,
+            ]);
+
+            if($pesanans->count() > 0){
+                $this->view->pesanans = $pesanans;
+                $this->view->flag = 1;
+            }
+            else{
+                $this->view->flag = 0;
+            }
         }
         
     }
@@ -79,7 +88,7 @@ class PesananController extends ControllerBase
             $alamat_kirim = $this->request->getPost('alamat_kirim', 'string');
             $keterangan = $this->request->getPost('keterangan', 'string');
             $keterangan = $keterangan . "\n";
-            $sudah_dibayar = 1;
+            $sudah_dibayar = 0;
             $status_pengiriman = 0;
 
             // Cek file bukti bayar berupa foto atau tidak
@@ -103,8 +112,8 @@ class PesananController extends ControllerBase
                     $pesanan->alamat_kirim = $alamat_kirim;
                     $pesanan->keterangan = $keterangan;
                     $pesanan->bukti_bayar = $path;
-                    $pesanan->sudah_dibayar = 1;
-                    $pesanan->status_pengiriman = 0;
+                    $pesanan->sudah_dibayar = $sudah_dibayar;
+                    $pesanan->status_pengiriman = $status_pengiriman;
 
                     $berhasil = $pesanan->save();
 
@@ -149,6 +158,34 @@ class PesananController extends ControllerBase
         }
         else{
             $this->flashSession->error("Error: Bukan method post pesanan.");
+            $this->response->redirect('error');
+        }
+    }
+
+    public function validasiAction()
+    {
+        if($this->request->isPost()){
+            $id_pesanan = $this->request->getPost('id_pesanan', 'int');
+            $conditions = ['id' => $id_pesanan];
+            $pesanan = Pesanan::findFirst([
+                'conditions' => 'id_pesanan = :id:',
+                'bind' => $conditions,
+            ]);
+            $sudah_dibayar = 1;
+            
+            $pesanan->sudah_dibayar = $sudah_dibayar;
+            $success = $pesanan->save();
+
+            if($success){
+                $this->response->redirect('pesanan');
+            }
+            else{
+                $this->flashSession->error("Error: Pesanan gagal divalidasi");
+                $this->response->redirect('pesanan');
+            }
+        }
+        else{
+            $this->flashSession->error("Error: Bukan method post validasi pesanan.");
             $this->response->redirect('error');
         }
     }
