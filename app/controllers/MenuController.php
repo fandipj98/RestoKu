@@ -37,47 +37,46 @@ class MenuController extends ControllerBase
         $tersedia           = $this->request->getPost('tersedia');
         $deskripsi          = $this->request->getPost('deskripsi');
 
-        if($harga == "" || $jenis == "" || $tersedia == "" || $deskripsi == "" || $foto == "")
+        if($harga == "" || $jenis == "" || $tersedia == "" || $deskripsi == "")
         {
             $this->flash->error("It's look like some field is not filled!");
             return $this->response->redirect('/menu/create');
         }
 
-        $file       = $this->request->getUploadedFiles()[0];
-        $path       = 'img/';
+        // $file       = $this->request->getUploadedFiles()[0];
+        // $path       = 'img/menu';
 
-        if ($file == NULL)
-        {
-            return $this->response->redirect('/pemesanan/upload/' . $id);
-        }
-        else
-        {
-            $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
-            if($ext == "jpg" || $ext == "jpeg")
-            {
-                $pathfile = $path . $id . time() . $file->getName();
-                $file->moveTo($pathfile);
-                $savepathfile = '/public/' . $pathfile;
+        // if ($file == NULL)
+        // {
+        //     return $this->response->redirect('/menu/create/' . $id);
+        // }
+        // else
+        // {
+            // $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
+            // if($ext == "jpg" || $ext == "jpeg")
+            // {
+            //     $pathfile = $path . $nama . time() . $file->getName();
 
+            //     // $file->moveTo($pathfile);
+
+                $tes = 'tesaja.png';
                 $menu = new Menu();
 
-                $menu->nama_menu            = $menu;
+                $menu->nama_menu            = $nama;
                 $menu->harga_menu           = $harga;
                 $menu->jenis_menu           = $jenis;
                 $menu->tersedia             = $tersedia;
                 $menu->deskripsi_menu       = $deskripsi;
-                $menu->foto_menu            = $savepathfile;
+                $menu->foto_menu            = $tes;
 
-
-
-                $menu->save();
-                $this->response->redirect("/menu/read");
-            }
-            else
-            {
-                return $this->response->redirect('/menu/create/');
-            }
-        }
+                $menu->create();
+                $this->response->redirect("/menu");
+            // }
+            // else
+            // {
+            //     return $this->response->redirect('/menu/create/');
+            // }
+        // }
     }
 
     public function readAction()                // Melihat pesanan yang dipesan oleh user

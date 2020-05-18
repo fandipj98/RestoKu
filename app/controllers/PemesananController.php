@@ -48,7 +48,7 @@ class PemesananController extends ControllerBase
         $pemesanan->waktu_selesai           = date('Y-m-d H:i', strtotime($final_date));
         $pemesanan->biaya                   = $harga;
         $pemesanan->lunas                   = 0;
-        $pemesanan->bukti_pembayaran        = '/public/img/no_image.jpg';
+        $pemesanan->bukti_pembayaran        = 'img/pemesanan/no_image.jpg';
         
         $pemesanan->create();
         return $this->response->redirect('/pemesanan/upload/' . $pemesanan->id);
@@ -81,7 +81,7 @@ class PemesananController extends ControllerBase
     {
         $id         = $this->request->getPost('id');
         $file       = $this->request->getUploadedFiles()[0];
-        $path       = 'img/';
+        $path       = 'img/pemesanan';
 
         if ($file == NULL)
         {
