@@ -24,12 +24,12 @@
 		</div>
 		<div class="fixed-view-menu">
 			<p>
-				<a href="{{ url("menu") }}">view menu</a>
+				<a href="{{ url("pesanan") }}">pesanan</a>
 			</p>
 		</div>
 		<div class="fixed-book-table">
 			<p>
-				<a href="{{ url("pesanan") }}">view pesanan</a>
+				<a href="{{ url("pemesanan/read") }}">reservasi</a>
 			</p>
 		</div>
 	{% endif %}	

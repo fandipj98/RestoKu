@@ -68,10 +68,12 @@ class MenuController extends ControllerBase
                 $this->response->redirect("/menu/read");
             }
             else{
+                $this->flashSession->error("Error: Menu tidak berhasil dibuat");
                 return $this->response->redirect('/menu/create/');
             }
         }
         else{
+            $this->flashSession->error("Error: Tidak ada foto berhasil dibuat");
             return $this->response->redirect('/menu/create/');
         }
     }
