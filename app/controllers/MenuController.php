@@ -70,7 +70,7 @@ class MenuController extends ControllerBase
                 $menu->foto_menu            = $tes;
 
                 $menu->create();
-                $this->response->redirect("/menu");
+                $this->response->redirect("/menu/read");
             // }
             // else
             // {
@@ -83,7 +83,6 @@ class MenuController extends ControllerBase
     {
         
         $menus = Menu::find();
-        $this->view->user->name = "admin";
         $this->view->menus = $menus;
         
     }
@@ -115,7 +114,7 @@ class MenuController extends ControllerBase
 
     public function deleteAction($id)
     {
-        if($this->session)                      // Checking apakah admin
+        if($this->session('auth')['status']==0)                      // Checking apakah admin
         {
             $menu = Menu::findFirst($id);
             $menu->delete();
