@@ -116,19 +116,36 @@ class MenuController extends ControllerBase
             return $this->response->redirect('/menu/update/' . $id);
         }
 
-        $tes = 'tesaja.png';
         $menu = Menu::findFirst($id);
+        $path ='img/menu/';
+        $updatePath = $menu->foto_menu;
+        if ($this->request->hasFiles()) {
+            $gambar = $this->request->getUploadedFiles()[0];
+            $allowed = array('jpeg', 'png', 'jpg');
+            $filename = $gambar->getName();
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            // cek ekstensi file
+            if (in_array($ext, $allowed)) {
+                $path = $path . time() . "_" . $filename;
+                $gambar->moveTo($path);
+                
+                $updatePath = $path;
+                
+            }
+            else{
+                return $this->response->redirect('/menu/update/' . $id);
+            }
+        }        
 
         $menu->nama_menu            = $nama;
         $menu->harga_menu           = $harga;
         $menu->jenis_menu           = $jenis;
         $menu->tersedia             = $tersedia;
         $menu->deskripsi_menu       = $deskripsi;
-        $menu->foto_menu            = $tes;
+        $menu->foto_menu            = $updatePath;
 
         $menu->save();
         $this->response->redirect("/menu/read");
-
     }
 
     public function deleteAction($id)

@@ -64,15 +64,15 @@
                     <span class="focus-input100"></span>
                 </div>
 
-                {# <div class="p-t-10 p-b-7">
+                <div class="p-t-10 p-b-7">
                     <span class="txt1">
                         Sertakan gambar
                     </span>
                 </div>
-                <div class="wrap-input100 validate-input" data-validate = "Deskripsi is required">
-                    <input class="input100" type="file" name="file" >
+                <div>
+                    <input class="input100" type="file" name="file">
                     <span class="focus-input100"></span>
-                </div> #}
+                </div>
 
                 <div class="container-login100-form-btn m-t-30">
                     <button class="login100-form-btn">

@@ -81,7 +81,7 @@ class PemesananController extends ControllerBase
     {
         $id         = $this->request->getPost('id');
         $file       = $this->request->getUploadedFiles()[0];
-        $path       = 'img/pemesanan';
+        $path       = 'img/pemesanan/';
 
         if ($file == NULL)
         {
@@ -95,10 +95,10 @@ class PemesananController extends ControllerBase
                 $pemesanan = Pemesanan::findFirst($id);
                 $pathfile = $path . $id . time() . $file->getName();
                 $file->moveTo($pathfile);
-                $savepathfile = '/public/' . $pathfile;
-                echo $pathfile;
-                echo $pemesanan->bukti_pembayaran;
-                $pemesanan->bukti_pembayaran = $savepathfile;
+                // $savepathfile = '/public/' . $pathfile;
+                // echo $pathfile;
+                // echo $pemesanan->bukti_pembayaran;
+                $pemesanan->bukti_pembayaran = $pathfile;
                 $pemesanan->lunas = 1;
                 $pemesanan->save();
                 return $this->response->redirect('/pemesanan/read/');
