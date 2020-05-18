@@ -14,7 +14,7 @@
                         <div class="card-body py-2">
                             <div class="row text-center ">
                                 <div class="col-md-2 mr-2">
-                                    <i class="fas fa-couch fa-5x"></i>
+                                    <img src="{{ url(menu.foto_menu) }}" width="150" height="150">
                                 </div>
                                 <div class="col-md-6 mr-3">
                                     <form>

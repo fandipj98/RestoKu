@@ -81,6 +81,7 @@
 											<a class="dropdown-item" href="{{ url("/pemesanan/read") }}">Reservasi</a>
 											{% if session.get('auth')['status'] == 0 %}
 												<a class="dropdown-item" href="{{ url("/meja/read") }}">List Meja</a>
+												<a class="dropdown-item" href="{{ url("/menu/read") }}">List Menu</a>
 												<a class="dropdown-item" href="{{ url("/menu/create") }}">Tambah Menu</a>
 											{% endif %}
 											<div class="dropdown-divider"></div>

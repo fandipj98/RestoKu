@@ -43,23 +43,18 @@ class MenuController extends ControllerBase
             return $this->response->redirect('/menu/create');
         }
 
-        // $file       = $this->request->getUploadedFiles()[0];
-        // $path       = 'img/menu';
-
-        // if ($file == NULL)
-        // {
-        //     return $this->response->redirect('/menu/create/' . $id);
-        // }
-        // else
-        // {
-            // $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
-            // if($ext == "jpg" || $ext == "jpeg")
-            // {
-            //     $pathfile = $path . $nama . time() . $file->getName();
-
-            //     // $file->moveTo($pathfile);
-
-                $tes = 'tesaja.png';
+        $path ='img/menu/';
+        if ($this->request->hasFiles()) {
+            $gambar = $this->request->getUploadedFiles()[0];
+            $allowed = array('jpeg', 'png', 'jpg');
+            $filename = $gambar->getName();
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            // cek ekstensi file
+            if (in_array($ext, $allowed)) {
+                $path = $path . time() . "_" . $filename;
+                $gambar->moveTo($path);
+                
+                // create new menu
                 $menu = new Menu();
 
                 $menu->nama_menu            = $nama;
@@ -67,16 +62,18 @@ class MenuController extends ControllerBase
                 $menu->jenis_menu           = $jenis;
                 $menu->tersedia             = $tersedia;
                 $menu->deskripsi_menu       = $deskripsi;
-                $menu->foto_menu            = $tes;
+                $menu->foto_menu            = $path;
 
                 $menu->create();
                 $this->response->redirect("/menu/read");
-            // }
-            // else
-            // {
-            //     return $this->response->redirect('/menu/create/');
-            // }
-        // }
+            }
+            else{
+                return $this->response->redirect('/menu/create/');
+            }
+        }
+        else{
+            return $this->response->redirect('/menu/create/');
+        }
     }
 
     public function readAction()                // Melihat pesanan yang dipesan oleh user
