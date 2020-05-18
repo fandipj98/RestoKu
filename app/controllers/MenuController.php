@@ -95,7 +95,7 @@ class MenuController extends ControllerBase
 
     }
 
-    public function updateAction()              // Upload pembayaran saja
+    public function updateAction($id)              // Upload pembayaran saja
     {
 
         $menu = Menu::findFirst($id);
@@ -106,9 +106,31 @@ class MenuController extends ControllerBase
     public function changeAction()              // Save dari upload pembayaran saja
     {
 
+        $id                 = $this->request->getPost('id');
+        $nama               = $this->request->getPost('nama');
+        $harga              = $this->request->getPost('harga');
+        $jenis              = $this->request->getPost('jenis');
+        $tersedia           = $this->request->getPost('tersedia');
+        $deskripsi          = $this->request->getPost('deskripsi');
+
+        if($harga == "" || $jenis == "" || $tersedia == "" || $deskripsi == "")
+        {
+            $this->flash->error("It's look like some field is not filled!");
+            return $this->response->redirect('/menu/update/' . $id);
+        }
+
+        $tes = 'tesaja.png';
         $menu = Menu::findFirst($id);
 
+        $menu->nama_menu            = $nama;
+        $menu->harga_menu           = $harga;
+        $menu->jenis_menu           = $jenis;
+        $menu->tersedia             = $tersedia;
+        $menu->deskripsi_menu       = $deskripsi;
+        $menu->foto_menu            = $tes;
+
         $menu->save();
+        $this->response->redirect("/menu/read");
 
     }
 
@@ -128,3 +150,5 @@ class MenuController extends ControllerBase
     }
 
 }
+
+
