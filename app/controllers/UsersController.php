@@ -61,11 +61,8 @@ class UsersController extends ControllerBase
                         ]
                     );
 
-                    // Go to user
-                    if($this->session->get('auth')['status'] == 0){
-                        $this->response->redirect('/');
-                    }
-
+                    // Go to home
+                    $this->response->redirect('/');
                 }
                 else{
                     $this->flash->error("Error: " . implode(", ",$user->getMessages()));
@@ -113,10 +110,8 @@ class UsersController extends ControllerBase
                         ]
                     );
 
-                    // Go to user
-                    if($this->session->get('auth')['status'] == 0){
-                        $this->response->redirect('/');
-                    }
+                    // Go to home
+                    $this->response->redirect('/');
                 }
                 else{
                     $this->flash->error("Error: Password yang anda masukkan salah");

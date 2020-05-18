@@ -41,14 +41,16 @@
 							<h4 class="excert"><span>Rp. </span>{{ menu.harga_menu }}</h4>
                             {# Member #}
                             {% if session.has("auth") %}
-                                {% if menu.tersedia > 0 %}
-                                    <div>
-                                        <form method="POST" action="{{ url("keranjang/create") }}">
-                                            <input name="id_menu" value="{{ menu.id_menu }}" hidden>
-                                            <button type="submit" class="primary-btn">Tambah Ke Keranjang</button>
-                                        </form>
-                                    </div>
-                                {% endif %}
+								{% if session.get('auth')['status'] != 0 %}
+									{% if menu.tersedia > 0 %}
+										<div>
+											<form method="POST" action="{{ url("keranjang/create") }}">
+												<input name="id_menu" value="{{ menu.id_menu }}" hidden>
+												<button type="submit" class="primary-btn">Tambah Ke Keranjang</button>
+											</form>
+										</div>
+									{% endif %}
+								{% endif %}
                             {% endif %}				
 						</div>
 					</div>
