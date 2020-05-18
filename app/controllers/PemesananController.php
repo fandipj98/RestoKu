@@ -5,7 +5,7 @@ class PemesananController extends ControllerBase
 
     public function createAction()              // Pemesanan awal
     {
-        if(!$this->session->has('user'))
+        if(!$this->session->get('auth'))
         {
             $this->response->redirect('/login');
         }
@@ -14,7 +14,7 @@ class PemesananController extends ControllerBase
 
     public function saveAction()                // Pemesanan awal
     {
-        if(!$this->session->has('user'))
+        if(!$this->session->get('auth'))
         {
             $this->response->redirect('/login');
         }
@@ -144,7 +144,7 @@ class PemesananController extends ControllerBase
 
     public function listAction()
     {
-        if(!$this->session->has('user'))
+        if(!$this->session->get('auth'))
         {
             $this->response->redirect('/signin');
         }

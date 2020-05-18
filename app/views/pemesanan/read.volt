@@ -40,7 +40,7 @@
                                                     <label class="col-md-6 text-left">Waktu Selesai </label> : {{pemesanan.waktu_selesai}}
                                                 </div>
                                             </form>
-                                            {% if session.get('auth')['status'] == "admin" %}
+                                            {% if session.get('auth')['status'] == 0 %}
                                                 <div class="btn btn-primary"  data-toggle="modal" data-target="#imgModal{{ pemesanan.id }}">
                                                     Bukti Pembayaran
                                                 </div>
@@ -66,7 +66,7 @@
                                             {% endif %}
                                         </div>
                                         <div class="ml-5 col-md-3">
-                                        {% if session.get('auth')['status'] == "admin" %}
+                                        {% if session.get('auth')['status'] == 0 %}
                                             {% if pemesanan.lunas == 1 OR pemesanan.lunas == 0%}
                                                 <a href={{ url("pemesanan/verifikasi/" ~  pemesanan.id) }}>
                                                     <div class="btn btn-primary">

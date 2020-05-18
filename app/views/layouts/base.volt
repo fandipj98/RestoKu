@@ -74,9 +74,16 @@
 											{{ session.get('auth')['firstName'] }}
 										</a>
 										<div class="dropdown-menu">
-											<a class="dropdown-item" href="{{ url("keranjang") }}">Keranjang</a>
-											<a class="dropdown-item" href="{{ url("pesanan") }}">Pesanan</a>
-											<a class="dropdown-item" href="{{ url("logout") }}">Logout</a>
+											{% if session.get('auth')['status'] != 0 %}
+												<a class="dropdown-item" href="{{ url("/keranjang") }}">Keranjang</a>
+											{% endif %}
+											<a class="dropdown-item" href="{{ url("/pesanan") }}">Pesanan</a>
+											<a class="dropdown-item" href="{{ url("/pemesanan/read") }}">Reservasi</a>
+											{% if session.get('auth')['status'] == 0 %}
+												<a class="dropdown-item" href="{{ url("/meja/read") }}">List Meja</a>
+											{% endif %}
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="{{ url("/logout") }}">Logout</a>
 										</div>
 									</li>
 								{% else %}

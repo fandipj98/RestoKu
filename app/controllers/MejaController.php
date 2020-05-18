@@ -34,7 +34,7 @@ class MejaController extends ControllerBase
 
     public function readAction()                // Melihat pesanan yang dipesan oleh user
     {
-        if($this->session->get('user')->name == "admin")
+        if($this->session->get('auth')['status'] == 0)
         {
             $mejas = Meja::find();
             $this->view->user->name = "admin";
