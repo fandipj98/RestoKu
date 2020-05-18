@@ -72,7 +72,4 @@ class MejaController extends BaseController
         return $this->response->redirect('/meja/read');
 
     }
-
-    
-
 }
